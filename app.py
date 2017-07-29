@@ -16,6 +16,9 @@ with open('full_categorys.p', 'rb') as f:
 pattern = re.compile(r'\b\w\w+\b')
 
 def stem(s):
+    print('*')
+    print(s)
+    print('*')
     return ' '.join(pattern.findall(s.lower()))
 
 def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
@@ -33,6 +36,7 @@ def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
 
 
 def predict(text):
+
     notes = pad_sentences(list(map(lambda x: filter(None, stem(x).split(' ')), text)),
                           sequence_length=256)
 
@@ -53,6 +57,9 @@ def predict(text):
 @app.route('/predict/', methods=['GET'])
 def prediction():
     text = request.args.get('text')
+    print('*')
+    print(text)
+    print('*')
 
     return jsonify({'doctor_ids': predict([text])})
 
