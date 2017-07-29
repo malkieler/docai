@@ -26,6 +26,7 @@ def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
     Pads all sentences to the same length. The length is defined by the longest sentence.
     Returns padded sentences.
     """
+    print(sentences)
     padded_sentences = []
     for i in range(len(sentences)):
         sentence = sentences[i][:sequence_length]
@@ -37,7 +38,7 @@ def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
 
 def predict(text):
 
-    notes = pad_sentences(list(map(lambda x: filter(None, stem(x).split(' ')), text)),
+    notes = pad_sentences(list(map(lambda x: stem(x).split(' '), text)),
                           sequence_length=256)
 
     x_n = np.array([[note_v[word] if word in note_v else note_v["<UNK/>"] for
