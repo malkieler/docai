@@ -16,7 +16,7 @@ with open('full_categorys.p', 'rb') as f:
 pattern = re.compile(r'\b\w\w+\b')
 
 def stem(s):
-    return ' '.join(pattern.findall(s))
+    return ' '.join(pattern.findall(s.lower()))
 
 def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
     """
@@ -33,8 +33,8 @@ def pad_sentences(sentences, padding_word="<PAD/>", sequence_length = 30):
 
 
 def predict(text):
-    notes = pad_sentences(list(map(lambda x: filter(None, stem(x).split(' ')), text),
-                          sequence_length=256))
+    notes = pad_sentences(list(map(lambda x: filter(None, stem(x).split(' ')), text)),
+                          sequence_length=256)
 
     x_n = np.array([[note_v[word] if word in note_v else note_v["<UNK/>"] for
                      word in sentence]
