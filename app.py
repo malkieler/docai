@@ -3,18 +3,8 @@ from flask import Flask, jsonify, request
 import re
 import _pickle as cPickle
 import numpy as np
-import os
-from keras import backend as K
 app = Flask(__name__)
 
-def set_keras_backend(backend):
-
-    if K.backend() != backend:
-        os.environ['KERAS_BACKEND'] = backend
-        reload(K)
-        assert K.backend() == backend
-
-set_keras_backend("theano")
 model = load_model("weights.hdf5")
 
 with open('note_v.p', 'rb') as f:
